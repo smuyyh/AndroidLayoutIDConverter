@@ -1,0 +1,41 @@
+<idea-plugin version="2">
+  <id>com.your.company.unique.plugin.id</id>
+  <name>Plugin display name here</name>
+  <version>1.0</version>
+  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+
+  <description><![CDATA[
+      Enter short description for your plugin here.<br>
+      <em>most HTML tags may be used</em>
+    ]]></description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="141.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <projectService serviceImplementation="com.yuyh.converter.ConvertConfigRepository" serviceInterface="com.yuyh.converter.ConvertConfigRepository"/>
+  </extensions>
+
+  <actions>
+    <action class="com.yuyh.converter.ConvertAction" description="Convert Android layout xml to Java code" id="ConvertAction"
+            text="Convert Android layout xml">
+      <add-to-group anchor="after" group-id="ToolsMenu" relative-to-action="AndroidToolsGroup"/>
+      <add-to-group anchor="after" group-id="ProjectViewPopupMenu"
+                    relative-to-action="ProjectViewPopupMenuRefactoringGroup"/>
+      <keyboard-shortcut first-keystroke="meta alt A" keymap="$default"/>
+    </action>
+  </actions>
+
+</idea-plugin>
