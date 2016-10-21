@@ -1,0 +1,2 @@
+# AndroidLayoutIDConverter
+Android Studio插件。快速生成findViewById代码/ButtefKnife注解/AndroidAnnotations注解~
