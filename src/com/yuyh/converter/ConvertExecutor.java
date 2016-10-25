@@ -114,10 +114,7 @@ public class ConvertExecutor {
 
         @Override
         public String toString() {
-            return "AndroidViewInfo{" +
-                    "type='" + type + '\'' +
-                    ", id='" + id + '\'' +
-                    '}';
+            return "AndroidViewInfo{ type='" + type + '\'' + ", id='" + id + '\'' + '}';
         }
     }
 
@@ -230,9 +227,11 @@ public class ConvertExecutor {
                 } else {
                     fieldJavaCode.append(String.format("@ViewById" + NL + "%s%s %s;" + NL, visibility, type, symbol));
                 }
-            } else if (config.format == ConvertConfig.ConvertFormat.BUTTER_KNIFE) {
+            } else if (config.format == ConvertConfig.ConvertFormat.BUTTER_KNIFE_INJECT) {
                 // Butter Knife always requires resource-id
                 fieldJavaCode.append(String.format("@InjectView(R.id.%s)" + NL + "%s%s %s;" + NL, info.id, visibility, type, symbol));
+            } else if (config.format == ConvertConfig.ConvertFormat.BUTTER_KNIFE_BIND) {
+                fieldJavaCode.append(String.format("@Bind(R.id.%s)" + NL + "%s%s %s;" + NL, info.id, visibility, type, symbol));
             } else {
                 fieldJavaCode.append(String.format("%s%s %s;" + NL, visibility, type, symbol));
             }

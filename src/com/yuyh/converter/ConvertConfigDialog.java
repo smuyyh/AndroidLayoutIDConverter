@@ -20,7 +20,8 @@ public class ConvertConfigDialog extends DialogWrapper {
     private JRadioButton mPrefixUnderscoreRadioButton;
     private JRadioButton mFormatPlainRadioButton;
     private JRadioButton mFormatAndroidAnnotationsRadioButton;
-    private JRadioButton mFormatButterKnifeRadioButton;
+    private JRadioButton mFormatButterKnifeInjectRadioButton;
+    private JRadioButton mFormatButterKnifeBindRadioButton;
     private JRadioButton mVisibilityPrivate;
     private JRadioButton mVisibilityPackagePrivate;
     private JRadioButton mVisibilityProtected;
@@ -78,30 +79,36 @@ public class ConvertConfigDialog extends DialogWrapper {
 
         mFormatPlainRadioButton = new JRadioButton("for plain Android frameworks");
         mFormatAndroidAnnotationsRadioButton = new JRadioButton("for AndroidAnnotations");
-        mFormatButterKnifeRadioButton = new JRadioButton("for ButterKnife");
+        mFormatButterKnifeInjectRadioButton = new JRadioButton("for ButterKnife(@InjectView(R.id.xxx))");
+        mFormatButterKnifeBindRadioButton = new JRadioButton("for ButterKnife(@Bind(R.id.xxx))");
 
         ActionListener formatChangeListener = actionEvent -> {
             if (actionEvent.getSource() == mFormatPlainRadioButton) {
                 applyVisibilityConstraint(ConvertConfig.ConvertFormat.PLAIN);
             } else if (actionEvent.getSource() == mFormatAndroidAnnotationsRadioButton) {
                 applyVisibilityConstraint(ConvertConfig.ConvertFormat.ANDROID_ANNOTATIONS);
-            } else if (actionEvent.getSource() == mFormatButterKnifeRadioButton) {
-                applyVisibilityConstraint(ConvertConfig.ConvertFormat.BUTTER_KNIFE);
+            } else if (actionEvent.getSource() == mFormatButterKnifeInjectRadioButton) {
+                applyVisibilityConstraint(ConvertConfig.ConvertFormat.BUTTER_KNIFE_INJECT);
+            } else if (actionEvent.getSource() == mFormatButterKnifeBindRadioButton) {
+                applyVisibilityConstraint(ConvertConfig.ConvertFormat.BUTTER_KNIFE_BIND);
             }
         };
 
         mFormatPlainRadioButton.addActionListener(formatChangeListener);
         mFormatAndroidAnnotationsRadioButton.addActionListener(formatChangeListener);
-        mFormatButterKnifeRadioButton.addActionListener(formatChangeListener);
+        mFormatButterKnifeInjectRadioButton.addActionListener(formatChangeListener);
+        mFormatButterKnifeBindRadioButton.addActionListener(formatChangeListener);
 
         ButtonGroup formatButtonGroup = new ButtonGroup();
         formatButtonGroup.add(mFormatPlainRadioButton);
         formatButtonGroup.add(mFormatAndroidAnnotationsRadioButton);
-        formatButtonGroup.add(mFormatButterKnifeRadioButton);
+        formatButtonGroup.add(mFormatButterKnifeInjectRadioButton);
+        formatButtonGroup.add(mFormatButterKnifeBindRadioButton);
 
         formatBox.add(mFormatPlainRadioButton);
         formatBox.add(mFormatAndroidAnnotationsRadioButton);
-        formatBox.add(mFormatButterKnifeRadioButton);
+        formatBox.add(mFormatButterKnifeInjectRadioButton);
+        formatBox.add(mFormatButterKnifeBindRadioButton);
 
         box.add(Box.createHorizontalStrut(5));
         box.add(formatBox);
@@ -195,8 +202,10 @@ public class ConvertConfigDialog extends DialogWrapper {
             return ConvertConfig.ConvertFormat.PLAIN;
         } else if (mFormatAndroidAnnotationsRadioButton.isSelected()) {
             return ConvertConfig.ConvertFormat.ANDROID_ANNOTATIONS;
-        } else if (mFormatButterKnifeRadioButton.isSelected()) {
-            return ConvertConfig.ConvertFormat.BUTTER_KNIFE;
+        } else if (mFormatButterKnifeInjectRadioButton.isSelected()) {
+            return ConvertConfig.ConvertFormat.BUTTER_KNIFE_INJECT;
+        } else if (mFormatButterKnifeBindRadioButton.isSelected()) {
+            return ConvertConfig.ConvertFormat.BUTTER_KNIFE_BIND;
         } else {
             throw new IllegalStateException("assert");
         }
@@ -210,8 +219,11 @@ public class ConvertConfigDialog extends DialogWrapper {
             case ANDROID_ANNOTATIONS:
                 mFormatAndroidAnnotationsRadioButton.setSelected(true);
                 break;
-            case BUTTER_KNIFE:
-                mFormatButterKnifeRadioButton.setSelected(true);
+            case BUTTER_KNIFE_INJECT:
+                mFormatButterKnifeInjectRadioButton.setSelected(true);
+                break;
+            case BUTTER_KNIFE_BIND:
+                mFormatButterKnifeBindRadioButton.setSelected(true);
                 break;
             default:
                 throw new IllegalStateException("assert");
@@ -226,7 +238,8 @@ public class ConvertConfigDialog extends DialogWrapper {
                 mVisibilityProtected.setEnabled(true);
                 break;
             case ANDROID_ANNOTATIONS:
-            case BUTTER_KNIFE:
+            case BUTTER_KNIFE_INJECT:
+            case BUTTER_KNIFE_BIND:
                 mVisibilityPrivate.setEnabled(false);
                 mVisibilityPackagePrivate.setEnabled(true);
                 mVisibilityProtected.setEnabled(true);

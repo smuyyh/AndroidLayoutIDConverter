@@ -11,7 +11,10 @@ public class ConvertConfig {
     }
 
     public enum ConvertFormat {
-        PLAIN, ANDROID_ANNOTATIONS, BUTTER_KNIFE;
+        PLAIN,
+        ANDROID_ANNOTATIONS,
+        BUTTER_KNIFE_INJECT,
+        BUTTER_KNIFE_BIND;
 
         public boolean requireAssignMethod() {
             return this == PLAIN;
